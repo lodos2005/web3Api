@@ -131,8 +131,12 @@ let networks={
 }
 
 
-router.get("/getMetadata/:network/:contract/:tokenid", async (req, res, next) => {
-try {
+// Create GET request
+app.get("/", (req, res) => {
+res.send("Express on Vercel");
+});
+app.get("/getMetadata/:network/:contract/:tokenid", async (req, res) => {
+
 
     let web3 = new Web3(networks[(req.params.network).toLowerCase()].rpc);
     let contract = new web3.eth.Contract(ERC721Abi,req.params.contract);
@@ -159,9 +163,6 @@ try {
 
     res.send(result);
 
-} catch (err) {
-    next(err);
-}
 });
 
 app.listen(process.env.PORT || 5000, () =>
